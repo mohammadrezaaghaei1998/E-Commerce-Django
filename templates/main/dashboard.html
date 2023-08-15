@@ -1,0 +1,110 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="dashboard-page" style="margin-top:200px;">
+  <div class="container mt-4" >
+    <div class="row">
+      <div class="col-md-6">
+        
+          <i class="bx bxs-heart"></i>
+          {% if request.user.is_authenticated %}
+            {% if favorite_count > 0 %}
+              <span class="favorite-count">{{ favorite_count }}</span>
+            {% else %}
+              <span class="favorite-count">0</span>
+            {% endif %}
+          {% else %}
+            <span class="favorite-count">0</span>
+          {% endif %}
+        
+        
+        <ul class="list-group">
+          {% for favorite_product in favorite_products %}
+          <li class="list-group-item">
+            <div class="favorite-product">
+              <div class="favorite-product-image">
+                <img src="{{ favorite_product.product.image.url }}" alt="{{ favorite_product.product.name }}" width="100">
+              </div>
+              <div class="favorite-product-details">
+                <h3>{{ favorite_product.product.name }}</h3>
+                {% if favorite_product.product.discount_price %}
+                      <p>Price: <del>${{ favorite_product.product.price }}</del> ${{ favorite_product.product.discount_price }}</p>
+                  {% else %}
+                      <p>Price: ${{ favorite_product.product.price }}</p>
+                  {% endif %}
+                <form method="post" action="{% url 'remove_from_favorite' favorite_product.product.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+                </form>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="dashboard" style="text-align: left; margin-top:200px; border:2px solid black; width:500px; background:red; color:white;
+  ">
+    <div>
+      <h2>Welcome to Your Dashboard, {{ user.username }}!</h2>
+      <h3>Your Notifications:</h3>
+      <ul>
+        {% for notification in user.notification_set.all %}
+        <li>{{ notification.message }} - {{ notification.timestamp }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div>
+    <div>
+      <div>
+      
+        <ul>
+          {% for favorite_product in favorite_products %}
+          {% if favorite_product.product.discount_price is not None and favorite_product.product.discount_price < favorite_product.product.price %}
+          <li>
+              <strong>{{ favorite_product.product.name }}</strong>
+              - This product is on discount now!
+          </li>
+          {% endif %}
+          {% endfor %}
+      </ul>
+    </div>
+    
+      <h3>Your Previous Orders:</h3>
+      <ul>
+        {% for order in previous_orders %}
+        <li>
+          <strong>Order Date:</strong> {{ order.created_at|date:"F j, Y, P" }}<br>
+          {% if order.cart.cartitem_set.all %}
+          <ul>
+            {% for product in order.cart.cartitem_set.all %}
+            <li>
+              <strong>Product Name:</strong> {{ product.product.name }}<br>
+              <strong>Product Price:</strong> ${{ product.product.price }}<br>
+              <strong>Product Color:</strong> {{ product.product.color }}<br>
+              <strong>Product Image:</strong> <img src="{{ product.product.image.url }}" alt="{{ product.product.name }}" width="100"><br>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p>No products found for this order.</p>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+<section class="user-information" style="flot:right">
+  <div>
+    
+  </div>  
+</section>
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,68 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block content %}
+
+
+
+
+
+    <section class="container">
+        <div class="login-container"  style="background-color:black;
+        color:white;
+        margin-top:200px;
+        border:2px solid red;
+        border-radius:10px;
+        padding:5px;
+        ">
+            <h1 style="text-align:center" >Login</h1>
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form action="/login/" method="post" style="
+            background-color:black;
+            color:white;
+            text-align:center;
+            margin-bottom:10px;
+            ">
+            {% csrf_token %}
+                <input type="text" name="username" placeholder="Username" required style="background:white;
+                text-color:white;
+                margin-top:5px;
+                padding:5px;
+                border:3px solid red;
+                border-radius:10px;
+               ">
+                <input type="password" name="password" placeholder="Password" required style="background:white;
+                text-color:white;
+                margin-top:5px;
+                padding:5px;
+                border:3px solid red;
+                border-radius:10px;
+               ">
+                <button type="submit" style="background:white;
+                text-color:white;
+                margin-top:5px;
+                padding:5px;
+                border:3px solid red;
+                border-radius:10px;
+               ">Login</button >
+            </form>
+            <div>
+                <p>
+                    <a href="{% url 'reset_password' %}">Forgot Password</a>
+                </p>
+            </div>
+        </div>
+        
+    </section>
+{% endblock %}
+
+
+  
+       

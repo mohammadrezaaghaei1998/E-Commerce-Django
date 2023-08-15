@@ -1,0 +1,110 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+<hr>
+<hr>
+<hr>
+
+<section class="section" id="products">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading">
+                    <h2>SEARCH RESULTS:</h2>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="men-item-carousel">
+                    <div class="owl-men-item owl-carousel">
+                        {% if product  %}
+                        {% for i in product  %}
+                        <div class="item">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="{% url 'detail' i.id %}"><i class="fa fa-eye"></i></a></li>
+                                        <li><a href="single-product.html"><i class="fa fa-star"></i></a></li>
+                                        <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                    <img src="{{ i.image.url }}" alt=""><h6 class="condition"> {{ i.condition }} </h6></img>
+                            </div>
+                            <div class="down-content">
+                                <h4>{{ i.name }}</h4>
+                                <h6 class="category"><a href="#">{{ i.categories }}</a></h6>
+
+                                <span>${{ i.price }}.00</span>
+                                <ul class="stars">
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% if messages %}
+                            <ul class="messages">
+                            {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <div class="item"></div>
+                        <div class="item"></div>
+                        <div class="item"></div>
+                        <div class="item"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+           
+
+            <div class="col-lg-12">
+                <div class="pagination">
+                    <ul>
+                        <li>
+                            <a href="#">1</a>
+                        </li>
+                        <li>
+                            <a href="#">2</a>
+                        </li>
+                        <li>
+                            <a href="#">3</a>
+                        </li>
+                        <li>
+                            <a href="#">4</a>
+                        </li>
+                        <li>
+                            <a href="#">></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+{% endblock %}
+
+
+
+
+
+   
+
+

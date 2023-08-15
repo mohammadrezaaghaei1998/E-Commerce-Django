@@ -1,0 +1,12 @@
+{% comment %} {% extends "main/base.html" %} {% endcomment %}
+{% block content %}
+    <h1>Favorite Products</h1>
+    <ul>
+        {% for favorite_product in favorite_products %}
+            <li>
+                <a href="{% url 'detail' favorite_product.product.id %}">{{ favorite_product.product.name }}</a>
+                <a href="{% url 'remove_from_favorite' favorite_product.product.id %}">Remove</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

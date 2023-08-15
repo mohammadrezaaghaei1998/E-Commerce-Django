@@ -1,0 +1,76 @@
+{% load static %}
+ <!-- ***** Preloader Start ***** -->
+ <div id="preloader">
+  <div class="jumper">
+      <div></div>
+      <div></div>
+      <div></div>
+  </div>
+</div>  
+<!-- ***** Preloader End ***** -->
+
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+  <div class="container">
+      <div class="row">
+          <div class="col-12">
+              <nav class="main-nav">
+                  <!-- ***** Logo Start ***** -->
+                  <a href="{% url "home" %}" class="logo">
+                      <img src="{% static "assets/images/logo.png" %}">
+                  </a>
+                  <!-- ***** Logo End ***** -->
+                  <!-- ***** Menu Start ***** -->
+                    <ul class="nav" >
+                      <li class="scroll-to-section"><a href="{% url "home" %}" >Home</a></li>
+                      <li class="scroll-to-section"><a href="#men">Men's</a></li>
+                      <li class="scroll-to-section"><a href="#women">Women's</a></li>
+                      <li class="scroll-to-section"><a href="#kids">Kid's</a></li>
+                      <li><a href="{% url "about" %}">About Us</a></li>
+                      <li><a href="{% url "products" %}">Products</a></li>
+                      <li><a href="{% url "contact" %}">Contact Us</a></li>
+
+                      
+
+
+                     
+                        <li class="submenu"> 
+                          <a href="javascript:;">Auth</a>
+                          <ul>
+                            {% if user.is_authenticated %}
+                            <li><a href="{% url "logout" %}">Logout</a></li>
+                            <li><a href="{% url "dashboard" %}">Dashboard</a></li>
+                            {% else %}
+                            <li><a href="{% url "login" %}">Login</a></li>
+                            <li><a href="{% url "register" %}">Register</a></li> 
+                            {% endif %}
+                          </ul> 
+                        </li>
+                        <a href="{% url 'cart_detail' %}">
+                          {% if request.user.is_authenticated %}
+                              <i class="bx bx-cart-alt" style="font-size: 40px;"></i>
+                              {% if cart_item_count > 0 %}
+                                  <span class="cart-count">{{ cart_item_count }}</span>
+                              {% else %}
+                                  <span class="cart-count">0</span>
+                              {% endif %}
+                          {% else %}
+                              <i class="bx bx-cart" style="font-size: 40px;"></i>
+                          {% endif %}
+                      </a>        
+                    </ul>     
+                    
+                   <form action="/search/" method="get">
+                        <div class="input-group" >
+                            <input type="search"  class="form-control rounded" name='query' id="query" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                            <button type="button" class="btn btn-outline-primary" style="background:black;">search</button>
+                        </div>
+                   </form>
+                  <!-- ***** Menu End ***** -->
+              </nav>
+          </div>
+      </div>
+  </div>
+</header>
+<!-- ***** Header Area End ***** -->
